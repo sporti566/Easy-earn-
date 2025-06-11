@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EasyEarn - Professional Clean Reward Platform</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+  @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+  :root {
+    --neon-blue: #00d7ff;
+    --background-dark: #001f30;
+    --background-darker: #00111a;
+    --text-light: #e0f7ff;
+    --border-radius: 12px;
+    --spacing: 16px;
+    --font-family: 'Inter', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-family);
+    background: var(--background-dark);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--background-darker);
+    padding: var(--spacing);
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue);
+    user-select: none;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px var(--spacing);
+  }
+
+  .container {
+    background: var(--background-darker);
+    padding: 32px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 30px rgba(0, 215, 255, 0.6);
+    max-width: 420px;
+    width: 100%;
+  }
+
+  h2 {
+    margin-bottom: 24px;
+    font-weight: 800;
+    color: var(--neon-blue);
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #a0eaff;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"] {
+    padding: 12px 14px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #004754;
+    background: #002834;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="number"]:focus {
+    border-color: var(--neon-blue);
+    outline: none;
+  }
+
+  button {
+    padding: 14px;
+    background: var(--neon-blue);
+    color: var(--background-dark);
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+    box-shadow: 0 0 8px var(--neon-blue);
+  }
+
+  button:hover:not(:disabled) {
+    background: #00ecff;
+    box-shadow: 0 0 12px #00ecff;
+  }
+
+  button:disabled {
+    background: #003a48;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .switch-link {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: #55c9e5;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .switch-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Activation code input styling */
+  #activation-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #a0eaff;
+    display: none;
+  }
+  #activation-code {
+    padding: 12px 14px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #004754;
+    background: #002834;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    transition: border-color 0.3s ease;
+    display: none;
+  }
+  #activation-code:focus {
+    border-color: var(--neon-blue);
+    outline: none;
+  }
+
+  /* Phone number input styling */
+  #phone-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #a0eaff;
+    display: block;
+  }
+  #phone {
+    padding: 12px 14px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #004754;
+    background: #002834;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    transition: border-color 0.3s ease;
+  }
+  #phone:focus {
+    border-color: var(--neon-blue);
+    outline: none;
+  }
+
+  /* Payment instructions section */
+  #payment-instructions {
+    background: #002136;
+    border-radius: var(--border-radius);
+    padding: 24px 32px;
+    box-shadow: 0 0 20px rgba(0, 215, 255, 0.5);
+    color: #a0dfff;
+    display: none;
+    max-width: 480px;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  #payment-instructions h3 {
+    color: var(--neon-blue);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  #payment-instructions ol {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+
+  #payment-instructions ol li {
+    margin-bottom: 8px;
+  }
+
+  #payment-instructions p.notice {
+    background: #003654;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #80dfff;
+    font-style: italic;
+    user-select: none;
+  }
+
+  #continue-login-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 16px;
+    background: var(--neon-blue);
+    color: var(--background-dark);
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--neon-blue);
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+
+  #continue-login-btn:hover {
+    background: #00ecff;
+    box-shadow: 0 0 16px #00ecff;
+  }
+
+  /* Dashboard styles */
+
+  #dashboard {
+    max-width: 640px;
+    background: var(--background-darker);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 30px rgba(0, 215, 255, 0.6);
+    padding: 32px 40px;
+    display: none;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  #dashboard header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--neon-blue);
+    font-weight: 800;
+    font-size: 1.8rem;
+    user-select: none;
+  }
+
+  #balance-section, #reward-section, #withdrawal-section, #survey-section {
+    background: #002534;
+    padding: 24px;
+    border-radius: 14px;
+    box-shadow: 0 0 12px rgba(0, 215, 255, 0.3);
+  }
+
+  #balance-section h3, #reward-section h3, #withdrawal-section h3, #survey-section h3 {
+    margin: 0 0 16px 0;
+    color: var(--neon-blue);
+    font-weight: 700;
+    font-size: 1.4rem;
+  }
+
+  #balance-amount {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: #00f0ff;
+    margin-bottom: 8px;
+    user-select: text;
+  }
+
+  #claim-btn {
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: none;
+    background: var(--neon-blue);
+    color: var(--background-dark);
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 0 8px var(--neon-blue);
+    transition: background-color 0.3s ease;
+  }
+
+  #claim-btn:disabled {
+    background: #004954;
+    color: #8edfff;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  #claim-btn:hover:not(:disabled) {
+    background: #00f5ff;
+    box-shadow: 0 0 12px #00f5ff;
+  }
+
+  /* Withdrawal Section */
+
+  #withdrawal-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #withdrawal-amount {
+    padding: 12px 14px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #004754;
+    background: #002834;
+    color: var(--text-light);
+    margin-bottom: 16px;
+    transition: border-color 0.3s ease;
+  }
+
+  #withdrawal-amount:focus {
+    border-color: var(--neon-blue);
+    outline: none;
+  }
+
+  #withdraw-btn {
+    padding: 12px;
+    background: var(--neon-blue);
+    color: var(--background-dark);
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+
+  #withdraw-btn:hover {
+    background: #00ecff;
+  }
+
+  #withdraw-message {
+    margin-top: 12px;
+    color: #ffcc00;
+    font-weight: 600;
+  }
+
+  /* Survey Section */
+
+  #survey-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .survey-item {
+    background: #003842;
+    border-radius: 12px;
+    padding: 18px 20px;
+    color: #a0eaff;
+  }
+
+  .survey-item h4 {
+    margin: 0 0 12px 0;
+    font-weight: 700;
+    color: var(--neon-blue);
+  }
+
+  .survey-item button {
+    margin-top: 8px;
+    background: #00d7ff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #002836;
+    cursor: pointer;
+    box-shadow: 0 0 6px #00d7ff;
+    transition: background-color 0.3s ease;
+  }
+
+  .survey-item button:hover {
+    background: #00f0ff;
+    box-shadow: 0 0 10px #00f0ff;
+  }
+
+  .survey-completed {
+    color: #40ffa8;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  /* Responsive */
+
+  @media (max-width: 640px) {
+    .container, #dashboard, #payment-instructions {
+      max-width: 100%;
+      padding: 24px 20px;
+    }
+
+    main {
+      padding: 20px 12px;
+    }
+  }
+</style>
+</head>
+<body>
+<header>EasyEarn</header>
+<main>
+  <div class="container" id="auth-container" role="main">
+    <h2 id="form-title">Sign Up</h2>
+    <form id="auth-form" autocomplete="off" aria-label="User authentication form" novalidate>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" autocomplete="off" required aria-required="true" aria-describedby="username-error" />
+      <small id="username-error" style="color:#ffcc00; display:none;"></small>
+
+      <label for="email" id="email-label">Email</label>
+      <input type="email" id="email" name="email" autocomplete="off" required aria-required="true" aria-describedby="email-error" />
+      <small id="email-error" style="color:#ffcc00; display:none;"></small>
+
+      <label for="phone" id="phone-label">Phone Number</label>
+      <input type="text" id="phone" name="phone" autocomplete="off" placeholder="+256XXXXXXXXX" aria-describedby="phone-error" />
+      <small id="phone-error" style="color:#ffcc00; display:none;"></small>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="new-password" required aria-required="true" minlength="6" aria-describedby="password-error"/>
+      <small id="password-error" style="color:#ffcc00; display:none;"></small>
+
+      <label for="activation-code" id="activation-label">Account Activation Code</label>
+      <input type="text" id="activation-code" name="activationCode" autocomplete="off" aria-describedby="activation-error" />
+      <small id="activation-error" style="color:#ffcc00; display:none;"></small>
+
+      <button type="submit" id="submit-btn">Sign Up</button>
+    </form>
+    <div id="switch-to-login" class="switch-link" role="button" tabindex="0">Already have an account? Log in</div>
+  </div>
+
+  <section id="payment-instructions" aria-live="polite" role="region" style="display:none;">
+    <h3>To Complete Your Signup Payment, Please Follow These Steps:</h3>
+    <ol>
+      <li>Dial <strong>*185*9#</strong> Using AirtelMoney pay</li>
+      <li>Enter Merchant Id: <strong>6830973</strong></li>
+      <li>Enter Amount: <strong>UGX 15,000</strong></li>
+      <li>Enter Reference: <strong>Username</strong></li>
+      <li>Confirm: <strong>EASYEARN</strong></li>
+      <li>Enter PIN</li>
+    </ol>
+    <p>After payment, paste the transaction message along with your phone number and email to our helpline: <strong>+256 751753084</strong></p>
+    <p class="notice" style="font-style:italic;">
+      ℹ️ Polite Notice:<br />
+      * Don't send money to the helpline<br />
+      * Paste the message (Not Screenshot)
+    </p>
+    <button id="continue-login-btn" aria-label="Continue to Login">Continue to Login</button>
+  </section>
+
+  <section id="dashboard" aria-label="User dashboard" aria-live="polite" tabindex="-1" style="display:none;">
+    <header>
+      <div>Welcome, <span id="user-display"></span></div>
+      <button id="logout-btn" aria-label="Log out">Logout</button>
+    </header>
+
+    <section id="balance-section" aria-labelledby="balance-title">
+      <h3 id="balance-title">Available Balance (UGX)</h3>
+      <div id="balance-amount" aria-live="polite" aria-atomic="true">UGX 0</div>
+    </section>
+
+    <section id="reward-section" aria-labelledby="reward-title">
+      <h3 id="reward-title">Daily Reward</h3>
+      <button id="claim-btn" aria-describedby="claim-desc">Claim UGX 1500 daily reward</button>
+      <p id="claim-desc" style="margin-top: 8px; color: #60eaff; font-size: 0.9rem;"></p>
+    </section>
+
+    <section id="withdrawal-section" aria-labelledby="withdrawal-title">
+      <h3 id="withdrawal-title">Withdrawals</h3>
+      <input type="number" id="withdrawal-amount" placeholder="Enter amount to withdraw" aria-label="Withdrawal amount"/>
+      <button id="withdraw-btn">Withdraw</button>
+      <p id="withdraw-message" style="color: #ffcc00; font-weight: 600;"></p>
+    </section>
+
+    <section id="survey-section" aria-labelledby="survey-title">
+      <h3 id="survey-title">Surveys</h3>
+      <div id="survey-list">
+        <!-- Dynamic survey items inserted here -->
+      </div>
+    </section>
+  </section>
+</main>
+
+<script>
+  (() => {
+    "use strict";
+
+    const INITIAL_BALANCE = 19000;
+    const DAILY_REWARD_AMOUNT = 1500;
+    const WITHDRAWAL_LIMIT = 450000;
+
+    // For surveys the amount will vary from 150 to 350 UGX randomly.
+    const SURVEYS = [
+      { id: 'survey1', question: 'Do you like online surveys?', minReward: 150, maxReward: 350 },
+      { id: 'survey2', question: 'How often do you participate in survey rewards?', minReward: 200, maxReward: 300 },
+      { id: 'survey3', question: 'Would you recommend EasyEarn to others?', minReward: 250, maxReward: 350 },
+      { id: 'survey4', question: 'What is your preferred social media platform?', minReward: 150, maxReward: 300 },
+      { id: 'survey5', question: 'Do you shop online frequently?', minReward: 200, maxReward: 350 },
+      { id: 'survey6', question: 'How often do you watch videos online?', minReward: 150, maxReward: 250 },
+      { id: 'survey7', question: 'What device do you primarily use?', minReward: 200, maxReward: 300 },
+      { id: 'survey8', question: 'How do you prefer to receive rewards?', minReward: 150, maxReward: 350 },
+      { id: 'survey9', question: 'How satisfied are you with our platform?', minReward: 200, maxReward: 350 },
+      { id: 'survey10', question: 'Would you participate in more surveys?', minReward: 150, maxReward: 300 },
+    ];
+
+    const VALID_ACTIVATION_CODES = new Set([
+      '231564','376578','111612','723901','657345','612884','212021','558075',
+      '273843','324789','324098','234768','567453'
+    ]);
+
+    const authContainer = document.getElementById('auth-container');
+    const authForm = document.getElementById('auth-form');
+    const formTitle = document.getElementById('form-title');
+    const switchToLoginLink = document.getElementById('switch-to-login');
+    const submitBtn = document.getElementById('submit-btn');
+
+    const activationLabel = document.getElementById('activation-label');
+    const activationCodeInput = document.getElementById('activation-code');
+    const activationError = document.getElementById('activation-error') || null;
+
+    const phoneLabel = document.getElementById('phone-label');
+    const phoneInput = document.getElementById('phone');
+    const phoneError = document.getElementById('phone-error') || null;
+
+    const usernameError = document.getElementById('username-error');
+    const emailError = document.getElementById('email-error');
+    const passwordError = document.getElementById('password-error');
+
+    const paymentInstructions = document.getElementById('payment-instructions');
+    const continueLoginBtn = document.getElementById('continue-login-btn');
+
+    const dashboard = document.getElementById('dashboard');
+    const userDisplay = document.getElementById('user-display');
+    const logoutBtn = document.getElementById('logout-btn');
+    const balanceAmount = document.getElementById('balance-amount');
+    const claimBtn = document.getElementById('claim-btn');
+    const claimDesc = document.getElementById('claim-desc');
+    const surveyList = document.getElementById('survey-list');
+
+    const withdrawalAmountInput = document.getElementById('withdrawal-amount');
+    const withdrawBtn = document.getElementById('withdraw-btn');
+    const withdrawMessage = document.getElementById('withdraw-message');
+
+    let isLoginMode = false;
+    let currentUser = null;
+
+    const storageKey = 'easyearn_users';
+    const authUserKey = 'easyearn_current_user';
+
+    function saveUsers(users) {
+      localStorage.setItem(storageKey, JSON.stringify(users));
+    }
+
+    function loadUsers() {
+      const data = localStorage.getItem(storageKey);
+      return data ? JSON.parse(data) : [];
+    }
+
+    function saveCurrentUser(user) {
+      localStorage.setItem(authUserKey, JSON.stringify(user));
+    }
+
+    function loadCurrentUser() {
+      const data = localStorage.getItem(authUserKey);
+      return data ? JSON.parse(data) : null;
+    }
+
+    function validateUsername(username) {
+      return /^[a-zA-Z0-9]{3,20}$/.test(username);
+    }
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function validatePassword(password) {
+      return password.length >= 6;
+    }
+
+    function validatePhone(phone) {
+      return /^\+256\d{9}$/.test(phone);
+    }
+
+    function validateActivationCode(code) {
+      return /^[0-9]{6}$/.test(code) && VALID_ACTIVATION_CODES.has(code);
+    }
+
+    function clearErrors() {
+      if (usernameError){ usernameError.style.display = 'none'; usernameError.textContent = ''; }
+      if (emailError){ emailError.style.display = 'none'; emailError.textContent = ''; }
+      if (phoneError){ phoneError.style.display = 'none'; phoneError.textContent = ''; }
+      if (passwordError){ passwordError.style.display = 'none'; passwordError.textContent = ''; }
+      if (activationError){ activationError.style.display = 'none'; activationError.textContent = ''; }
+    }
+
+    function formatUGX(amount) {
+      return 'UGX ' + amount.toLocaleString();
+    }
+
+    function toggleForms() {
+      isLoginMode = !isLoginMode;
+      clearErrors();
+
+      if (isLoginMode) {
+        formTitle.textContent = 'Log In';
+        submitBtn.textContent = 'Log In';
+        switchToLoginLink.textContent = "Don't have an account? Sign up";
+        document.getElementById('email').style.display = 'none';
+        document.getElementById('email-label').style.display = 'none';
+
+        activationLabel.style.display = 'block';
+        activationCodeInput.style.display = 'block';
+        activationCodeInput.required = true;
+
+        phoneLabel.style.display = 'none';
+        phoneInput.style.display = 'none';
+        phoneInput.required = false;
+
+        hidePaymentInstructions();
+
+      } else {
+        formTitle.textContent = 'Sign Up';
+        submitBtn.textContent = 'Sign Up';
+        switchToLoginLink.textContent = 'Already have an account? Log in';
+        document.getElementById('email').style.display = 'block';
+        document.getElementById('email-label').style.display = 'block';
+
+        activationLabel.style.display = 'none';
+        activationCodeInput.style.display = 'none';
+        activationCodeInput.required = false;
+
+        phoneLabel.style.display = 'block';
+        phoneInput.style.display = 'block';
+        phoneInput.required = true;
+
+        hidePaymentInstructions();
+      }
+      authForm.reset();
+    }
+
+    function showDashboard(user) {
+      clearErrors();
+      authContainer.style.display = 'none';
+      paymentInstructions.style.display = 'none';
+      dashboard.style.display = 'flex';
+      userDisplay.textContent = user.username;
+
+      withdrawMessage.textContent = '';
+      withdrawalAmountInput.value = '';
+
+      updateBalance(user.balance);
+      updateClaimButton(user);
+      renderSurveys(user);
+      dashboard.focus();
+    }
+
+    function updateBalance(balance) {
+      balanceAmount.textContent = formatUGX(balance);
+    }
+
+    function updateClaimButton(user) {
+      const lastClaim = user.lastClaimDate ? new Date(user.lastClaimDate) : null;
+      const now = new Date();
+
+      if (
+        lastClaim &&
+        lastClaim.getFullYear() === now.getFullYear() &&
+        lastClaim.getMonth() === now.getMonth() &&
+        lastClaim.getDate() === now.getDate()
+      ) {
+        claimBtn.disabled = true;
+        claimDesc.textContent = 'Daily reward claimed for today.';
+      } else {
+        claimBtn.disabled = false;
+        claimDesc.textContent = 'You can claim your daily UGX 1500 reward now.';
+      }
+    }
+
+    function renderSurveys(user) {
+      surveyList.innerHTML = '';
+      SURVEYS.forEach((survey) => {
+        const surveyDiv = document.createElement('div');
+        surveyDiv.className = 'survey-item';
+
+        const title = document.createElement('h4');
+        title.textContent = survey.question + ` (Earn UGX ${survey.minReward} - ${survey.maxReward})`;
+        surveyDiv.appendChild(title);
+
+        const isCompleted = user.completedSurveys && user.completedSurveys.includes(survey.id);
+
+        if (isCompleted) {
+          const conf = document.createElement('div');
+          conf.className = 'survey-completed';
+          conf.textContent = `Survey completed. UGX ${user.surveyRewards?.[survey.id] || '0'} earned.`;
+          surveyDiv.appendChild(conf);
+        } else {
+          const btn = document.createElement('button');
+          btn.textContent = `Complete Survey (+ UGX ${survey.minReward} ~ ${survey.maxReward})`;
+          btn.addEventListener('click', () => completeSurvey(survey.id, survey.minReward, survey.maxReward));
+          surveyDiv.appendChild(btn);
+        }
+
+        surveyList.appendChild(surveyDiv);
+      });
+    }
+
+    function signupUser(username, email, phone, password) {
+      clearErrors();
+      let users = loadUsers();
+      if (users.find((u) => u.username === username)) {
+        usernameError.textContent = 'Username already registered';
+        usernameError.style.display = 'block';
+        return false;
+      }
+      if (users.find((u) => u.email === email)) {
+        emailError.textContent = 'Email already registered';
+        emailError.style.display = 'block';
+        return false;
+      }
+      if (users.find((u) => u.phone === phone)) {
+        phoneError.textContent = 'Phone number already registered';
+        phoneError.style.display = 'block';
+        return false;
+      }
+
+      const newUser = {
+        username,
+        email,
+        phone,
+        password,
+        balance: INITIAL_BALANCE,
+        lastClaimDate: null,
+        completedSurveys: [],
+        surveyRewards: {}
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+      saveCurrentUser(newUser);
+      currentUser = newUser;
+      return true;
+    }
+
+    function loginUser(username, password, activationCode) {
+      clearErrors();
+      if (!validateActivationCode(activationCode)) {
+        activationError.textContent = 'Invalid activation code.';
+        activationError.style.display = 'block';
+        return false;
+      }
+      let users = loadUsers();
+      const user = users.find((u) => u.username === username);
+      if (!user) {
+        usernameError.textContent = 'Username not found.';
+        usernameError.style.display = 'block';
+        return false;
+      }
+      if(user.password !== password) {
+        passwordError.textContent = 'Incorrect password.';
+        passwordError.style.display = 'block';
+        return false;
+      }
+      saveCurrentUser(user);
+      currentUser = user;
+      return true;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem(authUserKey);
+      currentUser = null;
+      dashboard.style.display = 'none';
+      authContainer.style.display = 'block';
+      authForm.reset();
+      isLoginMode = false;
+      toggleForms();
+      hidePaymentInstructions();
+      clearErrors();
+    }
+
+    // Complete a survey and award random amount in specified range
+    function completeSurvey(surveyId, minReward, maxReward) {
+      if (!currentUser) return;
+      if (!currentUser.completedSurveys) {
+        currentUser.completedSurveys = [];
+      }
+      if (currentUser.completedSurveys.includes(surveyId)) return;
+
+      const earned = Math.floor(Math.random() * (maxReward - minReward + 1)) + minReward;
+
+      currentUser.completedSurveys.push(surveyId);
+      currentUser.balance = (currentUser.balance || 0) + earned;
+      if(!currentUser.surveyRewards) currentUser.surveyRewards = {};
+      currentUser.surveyRewards[surveyId] = earned;
+      updateUser(currentUser);
+      updateBalance(currentUser.balance);
+      renderSurveys(currentUser);
+      alert(`Thank you for completing the survey! UGX ${earned} added to your balance.`);
+    }
+
+    function updateUser(updatedUser) {
+      let users = loadUsers();
+      const idx = users.findIndex((u) => u.username === updatedUser.username);
+      if (idx !== -1) {
+        users[idx] = updatedUser;
+        saveUsers(users);
+        saveCurrentUser(updatedUser);
+      }
+    }
+
+    claimBtn.addEventListener('click', () => {
+      if (!currentUser) return;
+
+      const now = new Date();
+      const lastClaim = currentUser.lastClaimDate ? new Date(currentUser.lastClaimDate) : null;
+
+      if (
+        lastClaim &&
+        lastClaim.getFullYear() === now.getFullYear() &&
+        lastClaim.getMonth() === now.getMonth() &&
+        lastClaim.getDate() === now.getDate()
+      ) {
+        alert('You have already claimed the daily reward today.');
+        return;
+      }
+
+      currentUser.balance = (currentUser.balance || 0) + DAILY_REWARD_AMOUNT;
+      currentUser.lastClaimDate = now.toISOString();
+      updateUser(currentUser);
+      updateBalance(currentUser.balance);
+      updateClaimButton(currentUser);
+      alert('Daily reward UGX 1500 claimed!');
+    });
+
+    withdrawBtn.addEventListener('click', () => {
+      withdrawMessage.style.color = '#ffcc00';
+      withdrawMessage.textContent = '';
+      if (!currentUser) return;
+      const amount = parseInt(withdrawalAmountInput.value, 10);
+      if (isNaN(amount) || amount <= 0) {
+        withdrawMessage.textContent = 'Please enter a valid positive amount to withdraw.';
+        return;
+      }
+      if (currentUser.balance < WITHDRAWAL_LIMIT) {
+        withdrawMessage.textContent = `Reach the withdraw limit of UGX ${WITHDRAWAL_LIMIT.toLocaleString()} or contact our helpline on Whatsapp +256751753084`;
+        return;
+      }
+      if (amount > currentUser.balance) {
+        withdrawMessage.textContent = 'Insufficient balance for this withdrawal amount.';
+        return;
+      }
+      currentUser.balance -= amount;
+      updateUser(currentUser);
+      updateBalance(currentUser.balance);
+      withdrawalAmountInput.value = '';
+      withdrawMessage.style.color = '#40ffa8';
+      withdrawMessage.textContent = `Withdrawal of UGX ${amount.toLocaleString()} processed successfully.`;
+    });
+
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearErrors();
+      const username = authForm.username.value.trim();
+      const email = authForm.email.value.trim();
+      const phone = authForm.phone.value.trim();
+      const password = authForm.password.value;
+      const activationCode = authForm.activationCode.value.trim();
+
+      let valid = true;
+
+      if (!validateUsername(username)) {
+        usernameError.textContent = 'Username must be 3-20 characters, letters and numbers only.';
+        usernameError.style.display = 'block';
+        valid = false;
+      }
+      if (!isLoginMode && !validateEmail(email)) {
+        emailError.textContent = 'Please enter a valid email address.';
+        emailError.style.display = 'block';
+        valid = false;
+      }
+      if (!validatePassword(password)) {
+        passwordError.textContent = 'Password must be at least 6 characters.';
+        passwordError.style.display = 'block';
+        valid = false;
+      }
+      if (!isLoginMode && (phone === '' || !validatePhone(phone))) {
+        phoneError.textContent = 'Phone number is required and must start with +256 followed by 9 digits.';
+        phoneError.style.display = 'block';
+        valid = false;
+      }
+      if (isLoginMode) {
+        if (!activationCode) {
+          activationError.textContent = 'Activation code is required to log in.';
+          activationError.style.display = 'block';
+          valid = false;
+        } else if(!validateActivationCode(activationCode)) {
+          activationError.textContent = 'Invalid activation code.';
+          activationError.style.display = 'block';
+          valid = false;
+        }
+      }
+
+      if (!valid) return;
+
+      if (isLoginMode) {
+        const success = loginUser(username, password, activationCode);
+        if (success) {
+          showDashboard(currentUser);
+        }
+      } else {
+        const success = signupUser(username, email, phone, password);
+        if (success) {
+          showPaymentInstructions();
+        }
+      }
+    });
+
+    switchToLoginLink.addEventListener('click', () => {
+      clearErrors();
+      toggleForms();
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      logoutUser();
+    });
+
+    continueLoginBtn.addEventListener('click', () => {
+      hidePaymentInstructions();
+      isLoginMode = true;
+      showLoginForm();
+    });
+
+    function showPaymentInstructions() {
+      authContainer.style.display = 'none';
+      paymentInstructions.style.display = 'block';
+      dashboard.style.display = 'none';
+    }
+
+    function hidePaymentInstructions() {
+      paymentInstructions.style.display = 'none';
+    }
+
+    function showLoginForm() {
+      authContainer.style.display = 'block';
+      dashboard.style.display = 'none';
+      paymentInstructions.style.display = 'none';
+      formTitle.textContent = 'Log In';
+      submitBtn.textContent = 'Log In';
+      switchToLoginLink.textContent = "Don't have an account? Sign up";
+      document.getElementById('email').style.display = 'none';
+      document.getElementById('email-label').style.display = 'none';
+      activationLabel.style.display = 'block';
+      activationCodeInput.style.display = 'block';
+      activationCodeInput.required = true;
+      phoneLabel.style.display = 'none';
+      phoneInput.style.display = 'none';
+      phoneInput.required = false;
+      authForm.reset();
+      activationCodeInput.focus();
+    }
+
+    window.addEventListener('load', () => {
+      const savedUser = loadCurrentUser();
+      if (savedUser) {
+        currentUser = savedUser;
+        showDashboard(currentUser);
+      } else {
+        isLoginMode = false;
+        toggleForms();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
